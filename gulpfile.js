@@ -15,7 +15,7 @@ var config = {
    sourceMaps: false,//!plugins.util.env.production,
    clean:{
         prod:{
-            paths: ['public/{}/js,/css,/fonts}/**'],
+            paths: ['public/{/js,/css,/fonts}/**'],
             options: { read: false }
         }       
    },
@@ -47,17 +47,38 @@ var config = {
        },
        output:'public/css' 
    },
-   copy:{
-       src:[bower+'bootstrap/font*/**'],
-       dest:'public'
-   }
+   copy:[
+       {
+           src:[bower+'bootstrap/font*/**'],
+           dest:'public'
+       },
+       {
+           src:[bower+'jquery{,*}/dist/*.min.js'],
+           dest:'public/plugins'
+       },
+       {
+           src:[bower+'iCheck*/*'],
+           dest:'public/plugins'
+       }
+  ] 
+   
 }
 
 //Clean
 gulp.task('clean',function(){
     return gulp.src(config.production ? config.clean.prod.paths : [])
-        .pipe(plugins.clean(config.clean.prod.options))
+        .pipe(plugins.clean(config.clean.prod.options))  
 })
+
+
+//Copy
+gulp.task('copy',function(){    
+    config.copy.forEach(function(files){
+        gulp.src(files.src)
+          .pipe(gulp.dest(files.dest))
+    })
+})
+
 
 // Scripts
 gulp.task('scripts',['clean'], function(){
@@ -72,7 +93,7 @@ gulp.task('scripts',['clean'], function(){
 });
 
 // Styles
-gulp.task('styles',['clean'],function() {   
+gulp.task('styles',['clean','copy'],function() {   
 
   return gulp.src(config.css.less)    
     .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
@@ -86,12 +107,6 @@ gulp.task('styles',['clean'],function() {
     
 });
 
-
-//copy
-gulp.task('copy',function(){
-  return gulp.src(config.copy.src)
-    .pipe(gulp.dest(config.copy.dest))
-})
 
 // Watch
 gulp.task('watch', function(){
