@@ -1,62 +1,104 @@
+/*
+ Gulp Plugins:
+    load-plugins,less,util,concat,cssnano,uglify,notify,replace,autoprefixer,sourcemaps,minify
+ Other Plugins:
+    path 
+*/
 var gulp = require('gulp');
-var less = require('gulp-less');
 var path = require('path');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var notify = require('gulp-notify');
-var replace = require('gulp-replace');
-var autoprefixer = require('gulp-autoprefixer');
-var sourcemaps = require('gulp-sourcemaps');
+var plugins = require('gulp-load-plugins')();
 
 var bower  =  'bower_components/';
 var assets =  'resources/assets/';
-
-var paths = {
-   scripts:{
- 	input:[],
-       output:'public/js'
+var config = {
+   production: !!plugins.util.env.production,
+   sourceMaps: false,//!plugins.util.env.production,
+   clean:{
+        prod:{
+            paths: ['public/{}/js,/css,/fonts}/**'],
+            options: { read: false }
+        }       
    },
-   less: [
-       assets+'less/app.less',
-       assets+'less/admin-lte/AdminLTE.less',
-       assets+'less/admin-lte/sk*/*.less',
-       bower+'bootstrap/less/bootstrap.less'    
-   ],
-   styles:{
+   js:{
+ 	input:[],
+    output:'public/js'
+   },      
+   css:{
        input:[],
-       output:'public/css'
-   }  
+       less: [
+           assets+'less/app.less',
+           assets+'less/admin-lte/AdminLTE.less',
+           assets+'less/admin-lte/sk*/*.less',
+           bower+'bootstrap/less/bootstrap.less'
+       ],
+       cssnano:{
+           options:{
+               discardComments: { removeAll: false },
+               autoprefixer: false,
+               safe: true
+           }
+       },
+       autoprefix:{
+           enable: true,
+           options:{
+           	   browsers: ['last 2 versions'],
+           	   cascade: false
+           }
+       },
+       output:'public/css' 
+   },
+   copy:{
+       src:[bower+'bootstrap/font*/**'],
+       dest:'public'
+   }
 }
 
+//Clean
+gulp.task('clean',function(){
+    return gulp.src(config.production ? config.clean.prod.paths : [])
+        .pipe(plugins.clean(config.clean.prod.options))
+})
+
 // Scripts
-gulp.task('scripts',function(){
-  return gulp.src(paths.scripts.input)
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest(paths.scripts.output));
+gulp.task('scripts',['clean'], function(){
+    
+  return gulp.src(config.js.input)
+    .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
+    .pipe(plugins.uglify())
+    .pipe(config.sourceMaps ? plugins.sourcemaps.write('.') : plugins.util.noop())
+    .pipe(config.production ? plugins.rename({suffix: '.min'}) : plugins.util.noop())
+    .pipe(gulp.dest(config.js.output));
+    
 });
 
 // Styles
-gulp.task('styles', function() {
-  return gulp.src(paths.less)    
-    .pipe(sourcemaps.init())
-    .pipe(less({paths: [bower] } ))
-    .pipe(autoprefixer({
-		browsers: ['last 2 versions'],
-		cascade: false
-	 }))
-    .pipe(sourcemaps.write('.'))    
-    .pipe(gulp.dest(paths.styles.output))    
-    .pipe(notify({ message: 'Styles task complete' }));
+gulp.task('styles',['clean'],function() {   
+
+  return gulp.src(config.css.less)    
+    .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
+    .pipe(plugins.less({paths: [bower] } ))
+    .pipe(config.css.autoprefix.enable ? plugins.autoprefixer(config.css.autoprefix.options) :  plugins.util.noop())
+    .pipe(config.sourceMaps ? plugins.sourcemaps.write('.') : plugins.util.noop())    
+    .pipe(config.production ? plugins.cssnano(config.css.cssnano.options) : plugins.util.noop())
+    .pipe(config.production ? plugins.rename({suffix : '.min'}) : plugins.util.noop())
+    .pipe(gulp.dest(config.css.output))
+    .pipe(plugins.notify({ message: 'Styles task complete' }));
+    
 });
+
+
+//copy
+gulp.task('copy',function(){
+  return gulp.src(config.copy.src)
+    .pipe(gulp.dest(config.copy.dest))
+})
 
 // Watch
 gulp.task('watch', function(){
-  
-  gulp.watch(paths.styles.less, ['styles']);
+ 
+  gulp.watch(config.css.less, ['styles']);
 
-  gulp.watch(paths.scripts.input, ['scripts']);
+  gulp.watch(config.js.input, ['scripts']);
 
 });
 
