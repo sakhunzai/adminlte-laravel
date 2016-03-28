@@ -10,25 +10,37 @@ var plugins = require('gulp-load-plugins')();
 
 var bower  =  'bower_components/';
 var assets =  'resources/assets/';
+
 var config = {
    production: !!plugins.util.env.production,
-   sourceMaps: false,//!plugins.util.env.production,
+   sourceMaps: !plugins.util.env.production,
    clean:{
         prod:{
-            paths: ['public/{/js,/css,/fonts}/**'],
+            paths: [
+                'public/{css,js}/**/*.map',
+                'public/{css,js}/**/*(*.css|*.js)',
+                '!public/{css,js}/**/*(*.min.css|*.min.js)',
+                'public/img/admin-lte/{credit,landing,screenshots}',
+                'public/img/admin-lte/profile/user*.*'
+                ],
             options: { read: false }
         }       
    },
    js:{
- 	input:[],
+ 	input:[
+       bower+'jquery/dist/jquery.js',
+       bower+'jquery.localScroll/jquery.localScroll.js',
+       bower+'jquery.scrollTo/jquery.scrollTo.js',
+       assets+'js/**/*.js',
+    ],
     output:'public/js'
    },      
    css:{
        input:[],
        less: [
            assets+'less/app.less',
-           assets+'less/admin-lte/AdminLTE.less',
-           assets+'less/admin-lte/sk*/*.less',
+           assets+'less/admin-lt*/AdminLTE.less',
+           assets+'less/admin-lt*/sk*/*.less',
            bower+'bootstrap/less/bootstrap.less'
        ],
        cssnano:{
@@ -49,15 +61,15 @@ var config = {
    },
    copy:[
        {
-           src:[bower+'bootstrap/font*/**'],
-           dest:'public'
+           src:[assets+'img/**'],
+           dest:'public/img'
        },
        {
-           src:[bower+'jquery{,*}/dist/*.min.js'],
-           dest:'public/plugins'
-       },
+           src:[bower+'bootstrap/dist/fonts/**'],
+           dest:'public/fonts'
+       },      
        {
-           src:[bower+'iCheck*/*'],
+           src:[bower+'iCheck*/**'],
            dest:'public/plugins'
        }
   ] 
@@ -65,14 +77,14 @@ var config = {
 }
 
 //Clean
-gulp.task('clean',function(){
-    return gulp.src(config.production ? config.clean.prod.paths : [])
+gulp.task('clean',function(){  
+    return gulp.src(config.clean.prod.paths)
         .pipe(plugins.clean(config.clean.prod.options))  
 })
 
 
 //Copy
-gulp.task('copy',function(){    
+gulp.task('copy',['clean'],function(){    
     config.copy.forEach(function(files){
         gulp.src(files.src)
           .pipe(gulp.dest(files.dest))
@@ -81,7 +93,7 @@ gulp.task('copy',function(){
 
 
 // Scripts
-gulp.task('scripts',['clean'], function(){
+gulp.task('scripts',['copy'], function(){
     
   return gulp.src(config.js.input)
     .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
@@ -93,7 +105,7 @@ gulp.task('scripts',['clean'], function(){
 });
 
 // Styles
-gulp.task('styles',['clean','copy'],function() {   
+gulp.task('styles',['copy'],function() {   
 
   return gulp.src(config.css.less)    
     .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())

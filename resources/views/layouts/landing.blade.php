@@ -13,9 +13,9 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <meta property="og:type" content="website" />
     <meta property="og:description" content="Adminlte-laravel - Laravel 5 package that switchs default Laravel scaffolding/boilerplate to AdminLTE template with Bootstrap 3.0 and Pratt Landing page" />
     <meta property="og:url" content="http://demo.adminlte.acacha.org/" />
-    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE.png" />
-    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x600.png" />
-    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/AcachaAdminLTE600x314.png" />
+    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/admin-lte/screenshots/AcachaAdminLTE.png" />
+    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/admin-lte/screenshots/AcachaAdminLTE600x600.png" />
+    <meta property="og:image" content="http://demo.adminlte.acacha.org/img/admin-lte/screenshots/AcachaAdminLTE600x314.png" />
     <meta property="og:sitename" content="demo.adminlte.acacha.org" />
     <meta property="og:url" content="http://demo.adminlte.acacha.org" />
 
@@ -29,7 +29,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/css/main.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/adminlte/landing.css') }}" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,300,700' rel='stylesheet' type='text/css'>
@@ -87,14 +87,14 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <div class="col-lg-2">
                 <h5>Amazing admin template</h5>
                 <p>Based on adminlte bootstrap theme</p>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/arrow1.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/admin-lte/landing/arrow1.png') }}">
             </div>
             <div class="col-lg-8">
-                <img class="img-responsive" src="{{ asset('/img/app-bg.png') }}" alt="">
+                <img class="img-responsive" src="{{ asset('/img/admin-lte/landing/app-bg.png') }}" alt="">
             </div>
             <div class="col-lg-2">
                 <br>
-                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/arrow2.png') }}">
+                <img class="hidden-xs hidden-sm hidden-md" src="{{ asset('/img/admin-lte/landing/arrow2.png') }}">
                 <h5>Awesome packaged...</h5>
                 <p>... by <a href="http://acacha.org/sergitur">Sergi Tur Badenas</a> at <a href="http://acacha.org">acacha.org</a> ready to use with Laravel!</p>
             </div>
@@ -112,17 +112,17 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <br>
             <br>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro01.png') }}" alt="">
+                <img src="{{ asset('/img/admin-lte/landing/intro01.png') }}" alt="">
                 <h3>Community</h3>
                 <p>See <a href="https://github.com/acacha/adminlte-laravel">Github project</a>, post <a href="https://github.com/acacha/adminlte-laravel/issues">issues</a> and <a href="https://github.com/acacha/adminlte-laravel/pulls">Pull requests</a></p>
             </div>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro02.png') }}" alt="">
+                <img src="{{ asset('/img/admin-lte/landing/intro02.png') }}" alt="">
                 <h3>Schedule</h3>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             </div>
             <div class="col-lg-4">
-                <img src="{{ asset('/img/intro03.png') }}" alt="">
+                <img src="{{ asset('/img/admin-lte/landing/intro03.png') }}" alt="">
                 <h3>Monitoring</h3>
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
             </div>
@@ -140,7 +140,7 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
             <br>
             <br>
             <div class="col-lg-6 centered">
-                <img class="centered" src="{{ asset('/img/mobile.png') }}" alt="">
+                <img class="centered" src="{{ asset('/img/admin-lte/landing/mobile.png') }}" alt="">
             </div>
 
             <div class="col-lg-6">
@@ -227,10 +227,10 @@ Landing page based on Pratt: http://blacktie.co/demo/pratt/
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner">
                         <div class="item active">
-                            <img src="{{ asset('/img/item-01.png') }}" alt="">
+                            <img src="{{ asset('/img/admin-lte/landing/item-01.png') }}" alt="">
                         </div>
                         <div class="item">
-                            <img src="{{ asset('/img/item-02.png') }}" alt="">
+                            <img src="{{ asset('/img/admin-lte/landing/item-02.png') }}" alt="">
                         </div>
                     </div>
                 </div>

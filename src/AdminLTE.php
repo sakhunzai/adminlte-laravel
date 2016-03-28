@@ -87,6 +87,7 @@ class AdminLTE
         return [
             ADMINLTETEMPLATE_PATH.'/resources/assets/less' => base_path('resources/assets/less'),
             ADMINLTETEMPLATE_PATH.'/gulpfile.js' => base_path('gulpfile.js'),
+            ADMINLTETEMPLATE_PATH.'/bower.json' => base_path('bower.js'),
         ];
     }
 }
