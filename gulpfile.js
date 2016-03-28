@@ -28,6 +28,7 @@ var config = {
    },
    js:{
  	input:[
+       bower+'bootstrap/dist/bootstrap.js',
        bower+'jquery/dist/jquery.js',
        bower+'jquery.localScroll/jquery.localScroll.js',
        bower+'jquery.scrollTo/jquery.scrollTo.js',
