@@ -39,10 +39,10 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             $this->defineRoutes();
         });
-
+        $this->setViewComposers();
         $this->publishHomeController();
         $this->changeAuthController();
-        $this->publishPublicAssets();
+        //$this->publishPublicAssets();
         $this->publishViews();
         $this->publishResourceAssets();
         $this->publishTests();
@@ -62,6 +62,12 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         }
     }
 
+    protected function setViewComposers()
+    {
+        $views='Acacha\AdminLTETemplateLaravel\Http\ViewComposers';
+        view()->composer('layouts.partials.contentheader',$views.'\BreadCrumbComposer');
+    }
+    
     /**
      * Publish Home Controller.
      */

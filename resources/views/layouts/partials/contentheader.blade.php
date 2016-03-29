@@ -5,7 +5,12 @@
         <small>@yield('contentheader_description')</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-        <li class="active">Here</li>
+        @foreach ($breadcrumbs as $bc)
+            @if(!@isset($bc['active']))
+                <li><a href="{{ $bc['link'] }}"><i class="{{ $bc['class'] }}"></i>{{ $bc['name'] }}</a></li>
+            @else
+                <li class="{{ $bc['class'] }}">{{ $bc['name'] }}</li>
+            @endif
+        @endforeach
     </ol>
 </section>

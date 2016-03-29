@@ -3,6 +3,13 @@
     load-plugins,less,util,concat,cssnano,uglify,notify,replace,autoprefixer,sourcemaps,minify
  Other Plugins:
     path 
+
+gulp --production 
+    generate minified files
+
+gulp clean:dev 
+    remove dev resources
+
 */
 var gulp = require('gulp');
 var path = require('path');
@@ -15,7 +22,7 @@ var config = {
    production: !!plugins.util.env.production,
    sourceMaps: !plugins.util.env.production,
    clean:{
-        prod:{
+        dev:{
             paths: [
                 'public/{css,js}/**/*.map',
                 'public/{css,js}/**/*(*.css|*.js)',
@@ -39,6 +46,7 @@ var config = {
    css:{
        input:[],
        less: [
+           assets+'css/admin-lt*/*.css',
            assets+'less/app.less',
            assets+'less/admin-lt*/AdminLTE.less',
            assets+'less/admin-lt*/sk*/*.less',
@@ -60,7 +68,7 @@ var config = {
        },
        output:'public/css' 
    },
-   copy:[
+   publish:[
        {
            src:[assets+'img/**'],
            dest:'public/img'
@@ -77,16 +85,16 @@ var config = {
    
 }
 
-//Clean
-gulp.task('clean',function(){  
-    return gulp.src(config.clean.prod.paths)
-        .pipe(plugins.clean(config.clean.prod.options))  
+//Clean dev resources 
+gulp.task('clean:dev',function(){  
+    return gulp.src(config.clean.dev.paths)
+        .pipe(plugins.clean(config.clean.dev.options))  
 })
 
 
-//Copy
-gulp.task('copy',['clean'],function(){    
-    config.copy.forEach(function(files){
+//Publish
+gulp.task('publish',function(){    
+    config.publish.forEach(function(files){
         gulp.src(files.src)
           .pipe(gulp.dest(files.dest))
     })
@@ -94,7 +102,7 @@ gulp.task('copy',['clean'],function(){
 
 
 // Scripts
-gulp.task('scripts',['copy'], function(){
+gulp.task('scripts',['publish'], function(){
     
   return gulp.src(config.js.input)
     .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
@@ -106,7 +114,7 @@ gulp.task('scripts',['copy'], function(){
 });
 
 // Styles
-gulp.task('styles',['copy'],function() {   
+gulp.task('styles',['publish'],function() {   
 
   return gulp.src(config.css.less)    
     .pipe(config.sourceMaps ? plugins.sourcemaps.init() : plugins.util.noop())
@@ -131,4 +139,3 @@ gulp.task('watch', function(){
 });
 
 gulp.task('default', ['scripts', 'styles']);
-

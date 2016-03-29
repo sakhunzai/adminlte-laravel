@@ -85,9 +85,7 @@ class AdminLTE
     public function resourceAssets()
     {
         return [
-            ADMINLTETEMPLATE_PATH.'/resources/assets/less' => base_path('resources/assets/less'),
-            ADMINLTETEMPLATE_PATH.'/resources/assets/css' => base_path('resources/assets/css'),
-            ADMINLTETEMPLATE_PATH.'/resources/assets/js' => base_path('resources/assets/js'),
+            ADMINLTETEMPLATE_PATH.'/resources/assets' => base_path('resources/assets'),
             ADMINLTETEMPLATE_PATH.'/gulpfile.js' => base_path('gulpfile.js'),
             ADMINLTETEMPLATE_PATH.'/bower.json' => base_path('bower.js'),
         ];
