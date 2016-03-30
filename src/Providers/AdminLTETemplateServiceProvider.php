@@ -29,6 +29,9 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->app->bind('AdminLTE', function () {
             return new \Acacha\AdminLTETemplateLaravel\AdminLTE();
         });
+        
+        $this->mergeConfigFrom(AdminLTE::getConfig(), 'adminlte');
+               
     }
 
     /**
@@ -40,8 +43,9 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
             $this->defineRoutes();
         });
         $this->setViewComposers();
-        $this->publishHomeController();
-        $this->changeAuthController();
+        $this->publishConfig();
+        //$this->publishHomeController();
+        //$this->changeAuthController();
         //$this->publishPublicAssets();
         $this->publishViews();
         $this->publishResourceAssets();
@@ -56,7 +60,7 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         if (!$this->app->routesAreCached()) {
             $router = app('router');
 
-            $router->group(['namespace' => $this->getAppNamespace().'Http\Controllers'], function () {
+            $router->group(['namespace' => 'Acacha\AdminLTETemplateLaravel\Http\Controllers'], function () {
                 require __DIR__.'/../Http/routes.php';
             });
         }
@@ -65,7 +69,14 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     protected function setViewComposers()
     {
         $views='Acacha\AdminLTETemplateLaravel\Http\ViewComposers';
-        view()->composer('layouts.partials.contentheader',$views.'\BreadCrumbComposer');
+        view()->composer('adminlte::layouts.partials.contentheader',$views.'\BreadCrumbComposer');
+    }
+    
+    /**
+     * Publish configuration file
+     */  
+    private function publishConfig(){
+        $this->publishes(AdminLTE::config(),'adminlte');
     }
     
     /**
@@ -99,7 +110,8 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(ADMINLTETEMPLATE_PATH.'/resources/views/', 'adminlte');
 
-        $this->publishes(AdminLTE::views(), 'adminlte');
+        //I dont thing we need to publish this 
+        //$this->publishes(AdminLTE::views(), 'adminlte');
     }
 
     /**

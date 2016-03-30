@@ -8,6 +8,16 @@ namespace Acacha\AdminLTETemplateLaravel;
 class AdminLTE
 {
     /**
+    * Configuration file
+    */
+    public function getConfig(){
+        return ADMINLTETEMPLATE_PATH.'/src/Config/adminlte.php';
+    }
+    
+    public function config(){
+        return [$this->getConfig() => config_path('adminlte.php')];
+    }
+    /**
      * Home controller copy path.
      *
      * @return array
@@ -54,14 +64,7 @@ class AdminLTE
      */
     public function views()
     {
-        return [
-            ADMINLTETEMPLATE_PATH.'/resources/views/auth' => base_path('resources/views/auth'),
-            ADMINLTETEMPLATE_PATH.'/resources/views/auth/emails' => base_path('resources/views/auth/emails'),
-            ADMINLTETEMPLATE_PATH.'/resources/views/errors' => base_path('resources/views/errors'),
-            ADMINLTETEMPLATE_PATH.'/resources/views/layouts' => base_path('resources/views/layouts'),
-            ADMINLTETEMPLATE_PATH.'/resources/views/home.blade.php' => base_path('resources/views/home.blade.php'),
-            ADMINLTETEMPLATE_PATH.'/resources/views/welcome.blade.php' => base_path('resources/views/welcome.blade.php'),
-        ];
+        return [ ADMINLTETEMPLATE_PATH.'/resources/views' => resource_path('views/vendor/adminlte') ] ;
     }
 
     /**
@@ -76,7 +79,7 @@ class AdminLTE
             ADMINLTETEMPLATE_PATH.'/phpunit.xml' => base_path('phpunit.xml'),
         ];
     }
-
+    
     /**
      * Resource assets copy path.
      *
@@ -90,4 +93,5 @@ class AdminLTE
             ADMINLTETEMPLATE_PATH.'/bower.json' => base_path('bower.js'),
         ];
     }
+        
 }

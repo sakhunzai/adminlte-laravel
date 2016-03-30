@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
     Register
@@ -56,14 +56,15 @@
                     </div><!-- /.col -->
                 </div>
             </form>
-
-            @include('auth.partials.social_login')
+             @if(@config('adminlte.socialLogin'))
+                @include('adminlte::auth.partials.social_login')
+             @endif    
 
             <a href="{{ url('/login') }}" class="text-center">I already have a membership</a>
         </div><!-- /.form-box -->
     </div><!-- /.register-box -->
 
-    @include('layouts.partials.scripts_auth')
+    @include('adminlte::layouts.partials.scripts_auth')
 
     <script>
         $(function () {

@@ -1,4 +1,4 @@
-@extends('layouts.auth')
+@extends('adminlte::layouts.auth')
 
 @section('htmlheader_title')
     Log in
@@ -48,7 +48,9 @@
         </div>
     </form>
 
-    @include('auth.partials.social_login')
+    @if(@config('adminlte.socialLogin'))
+        @include('adminlte::auth.partials.social_login')
+    @endif
 
     <a href="{{ url('/password/reset') }}">I forgot my password</a><br>
     <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
@@ -57,7 +59,7 @@
 
 </div><!-- /.login-box -->
 
-    @include('layouts.partials.scripts_auth')
+    @include('adminlte::layouts.partials.scripts_auth')
 
     <script>
         $(function () {

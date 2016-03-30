@@ -4,6 +4,7 @@
         @yield('contentheader_title', 'Page Header here')
         <small>@yield('contentheader_description')</small>
     </h1>
+    
     <ol class="breadcrumb">
         @foreach ($breadcrumbs as $bc)
             @if(!@isset($bc['active']))
