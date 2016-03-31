@@ -4,7 +4,7 @@ namespace Acacha\AdminLTETemplateLaravel\Http\ViewComposers;
 
 use Illuminate\View\View;
 
-class BreadCrumbComposer
+class BreadCrumb
 {
     public function compose($view){
         $view->with('breadcrumbs',[

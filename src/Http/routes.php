@@ -9,6 +9,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/home', 'HomeController@index');
 
     Route::get('/', function () {
+        //var_dump(AdminLTE::config());exit;
         return view(config('adminlte.welcomeView'));
     });
 });

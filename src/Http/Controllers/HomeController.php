@@ -29,6 +29,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view(config("adminlte.homeView");
+        return view(config("adminlte.homeView"));
     }
 }

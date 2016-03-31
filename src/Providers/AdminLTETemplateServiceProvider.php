@@ -69,7 +69,13 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     protected function setViewComposers()
     {
         $views='Acacha\AdminLTETemplateLaravel\Http\ViewComposers';
-        view()->composer('adminlte::layouts.partials.contentheader',$views.'\BreadCrumbComposer');
+        view()->composer('adminlte::layouts.app',$views.'\Layout');
+        view()->composer('adminlte::layouts.partials.htmlheader',$views.'\HtmlHeader');
+        view()->composer('adminlte::layouts.partials.mainheader',$views.'\MainHeader');
+        view()->composer('adminlte::layouts.partials.contentheader',$views.'\BreadCrumb');
+        view()->composer('adminlte::layouts.partials.sidebar',$views.'\SideBar');
+        view()->composer('adminlte::layouts.partials.footer',$views.'\Footer');
+        
     }
     
     /**

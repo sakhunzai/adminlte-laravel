@@ -29,7 +29,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="skin-blue sidebar-mini">
+<body class="{{ $layout->skinStyle }} sidebar-mini">
 <div class="wrapper">
 
     @include('adminlte::layouts.partials.mainheader')
@@ -48,9 +48,13 @@ desired effect
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
 
-    @include('adminlte::layouts.partials.controlsidebar')
+    @if($layout->showSidebar)
+        @include('adminlte::layouts.partials.controlsidebar')
+    @endif    
 
-    @include('adminlte::layouts.partials.footer')
+    @if($layout->showFooter)
+        @include('adminlte::layouts.partials.footer')
+    @endif    
 
 </div><!-- ./wrapper -->
 

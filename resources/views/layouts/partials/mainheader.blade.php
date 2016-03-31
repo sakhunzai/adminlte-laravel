@@ -4,9 +4,9 @@
     <!-- Logo -->
     <a href="{{ url('/home') }}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <span class="logo-mini">{!! $header->logoSmall !!}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE Laravel </span>
+        <span class="logo-lg">{!! $header->logoLarge !!}</span>
     </a>
 
     <!-- Header Navbar -->
@@ -34,7 +34,7 @@
                                     <a href="#">
                                         <div class="pull-left">
                                             <!-- User Image -->
-                                            <img src="{{ asset('/img/admin-lte/profile/user2-160x160.jpg') }}" class="img-circle" alt="User Image"/>
+                                            <img src="{{ $header->profileImg }}" class="img-circle" alt="User Image"/>
                                         </div>
                                         <!-- Message title and timestamp -->
                                         <h4>
@@ -117,14 +117,14 @@
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <img src="{{ asset('/img/admin-lte/profile/user2-160x160.jpg') }}" class="user-image" alt="User Image"/>
+                            <img src="{{ $header->profileImg }}" class="user-image" alt="User Image"/>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
                             <span class="hidden-xs">{{ Auth::user()->name }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <img src="{{ asset('/img/admin-lte/profile/user2-160x160.jpg') }}" class="img-circle" alt="User Image" />
+                                <img src="{{ $header->profileImg }}" class="img-circle" alt="User Image" />
                                 <p>
                                     {{ Auth::user()->name }}
                                     <small>Member since Nov. 2012</small>
@@ -154,11 +154,13 @@
                         </ul>
                     </li>
                 @endif
-
+                
+            @if($header->showSidebar)
                 <!-- Control Sidebar Toggle Button -->
-                <li>
+                <li>                    
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                 </li>
+            @endif
             </ul>
         </div>
     </nav>
