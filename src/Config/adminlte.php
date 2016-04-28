@@ -21,5 +21,17 @@ return [
     'homeView' => 'adminlte::home',
     'loginView' =>'adminlte::auth.login',
     'registerView' =>'adminlte::auth.register',
-    'resetView'=>'adminlte::auth.passwords.email'
+    'resetView'=>'adminlte::auth.passwords.email',
+    'auth'=>[
+        'register'=>[            
+             'name'=> ['first_name'=>'First name','last_name' => 'Last Name'],
+             'validations'=>[
+                    'first_name' => 'required|max:127',
+                    'last_name' => 'max:127',
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|max:255|unique:users',
+                    'password' => 'required|confirmed|min:6',
+             ]
+        ]
+    ]
 ];

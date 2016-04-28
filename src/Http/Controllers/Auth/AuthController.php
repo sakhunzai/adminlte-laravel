@@ -62,11 +62,18 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
+      $register=config('adminlte.auth.register');
+      if(!isset($register['validations'])){
+          $validations=[
+                    'name' => 'required|max:255',
+                    'email' => 'required|email|max:255|unique:users',
+                    'password' => 'required|confirmed|min:6',
+                ];
+        }
+        
+        // multi part name
+        $data=$this->normalizeName($data,$register);
+        return Validator::make($data,$register['validations']);
     }
 
     /**
@@ -77,10 +84,32 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $register=config('adminlte.auth.register');
+        
+        $data=$this->normalizeName($data,$register);
+        
+        $new_user=[
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-        ]);
+        ];
+        
+        if(isset($register['name'])){
+            $data=array_merge($data, array_intersect_key($data,$register['name'])); 
+        }        
+        
+        return User::create($data);
+    }
+    
+    private function normalizeName($data,$config=[]){
+        
+        $config=count($config) ? $config : config('adminlte.auth.register');
+        
+        if(isset($config['name'])){
+          $full_name= array_intersect_key($data,$config['name']);
+          $data['name']=join(' ',array_filter($full_name));
+        }
+        
+        return $data;
     }
 }
