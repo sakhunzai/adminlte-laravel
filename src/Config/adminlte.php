@@ -33,5 +33,7 @@ return [
                     'password' => 'required|confirmed|min:6',
              ]
         ]
-    ]
+    ],
+    'middleware' => ['web', 'auth'],
+    'prefix' => '',
 ];

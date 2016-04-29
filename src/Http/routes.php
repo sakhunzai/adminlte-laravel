@@ -3,7 +3,7 @@
  * Same configuration as Laravel 5.2:
  * See https://github.com/laravel/framework/blob/5.2/src/Illuminate/Auth/Console/stubs/make/routes.stub
  */
-Route::group(['middleware' => 'web'], function () {
+Route::group(['prefix' => config('adminlte.prefix'), 'middleware' => config('adminlte.middleware')], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
