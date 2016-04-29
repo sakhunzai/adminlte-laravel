@@ -112,4 +112,14 @@ class AuthController extends Controller
         
         return $data;
     }
+    
+    protected function authenticated($request, $user)
+    {
+        if (config('adminlte.redirectAfterLogin', false)) {
+            $redirect = config('adminlte.redirectAfterLogin', false);
+            return redirect($redirect());
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
 }

@@ -38,4 +38,5 @@ return [
     ],
     'middleware' => ['web', 'auth'],
     'prefix' => '',
+    'redirectAfterLogin' => '',
 ];
