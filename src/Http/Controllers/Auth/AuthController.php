@@ -63,6 +63,8 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
       $register=config('adminlte.auth.register');
+      $verification_code= str_random($register['verification']['token_length']);
+
       if(!isset($register['validations'])){
           $validations=[
                     'name' => 'required|max:255',
@@ -88,17 +90,43 @@ class AuthController extends Controller
         
         $data=$this->normalizeName($data,$register);
         
+        $verification_code= str_random($register['verification']['token_length']);
+
         $new_user=[
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'type' => $register['default_user_type'],
         ];
         
+
+        //if user name is multi part
         if(isset($register['name'])){
-            $data=array_merge($data, array_intersect_key($data,$register['name'])); 
+            $new_user=array_merge($new_user, array_intersect_key($data,$register['name'])); 
         }        
         
-        return User::create($data);
+        //if extra field to be captured
+        if(isset($register['extra_fields']) && count($register['extra_fields'])){
+            $extra= array_combine($register['extra_fields'],array_fill(0, count($register['extra_fields']), null));
+            $new_user=array_merge($new_user, array_intersect_key($data, $extra)); 
+        }        
+        
+
+        if( $register['verification']['enabled'] ){
+           
+           $new_user= array_merge($new_user,[
+                 'verification_code' => $verification_code,
+                 'is_verified'=> '0']
+            );
+
+           $user=User::create($new_user);
+
+           Flash::message($register['verification']['thankyou']);
+        }else{
+            $user=User::create($new_user);
+        }
+
+        return $user;
     }
     
     private function normalizeName($data,$config=[]){

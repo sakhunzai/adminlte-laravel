@@ -3,6 +3,9 @@
 return [
     'title'=>'Admin|LTE Laravel',
     'abbr' =>'A|LT',
+    'app' => [
+        'name' => 'Admin LTE Demo App'
+     ],
     'pageTitle'=>'AdminLTE with Laravel',
     'skins' =>['black','black-light','blue','blue-light','green','green-light',
         'purple','purple-light','red','red-light','yellow','yellow-light'
@@ -25,12 +28,22 @@ return [
     'auth'=>[
         'register'=>[            
              'name'=> ['first_name'=>'First name','last_name' => 'Last Name'],
+             'default_user_type'=> 'registered',
+             'extra_fields'=>['phone'],
              'validations'=>[
-                    'first_name' => 'required|max:127',
-                    'last_name' => 'max:127',
-                    'name' => 'required|max:255',
-                    'email' => 'required|email|max:255|unique:users',
-                    'password' => 'required|confirmed|min:6',
+                'first_name' => 'required|max:127',
+                'last_name' => 'max:127',
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|confirmed|min:6',
+             ],
+             'verification'=>[
+                'enabled'=> true,
+                'token_length'=> 30,
+                'column'=>'verification_code',
+                'subject'=> 'Verify your email address',
+                'thankyou'=> 'Thanks for signing up! Please check your email.',
+                'template'=> 'adminlte::emails.verify' 
              ]
         ]
     ]
