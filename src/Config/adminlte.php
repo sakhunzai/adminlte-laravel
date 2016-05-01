@@ -24,8 +24,10 @@ return [
     'homeView' => 'adminlte::home',
     'loginView' =>'adminlte::auth.login',
     'registerView' =>'adminlte::auth.register',
+    'thankyouView' =>'adminlte::auth.thankyou',
     'resetView'=>'adminlte::auth.passwords.email',
     'auth'=>[
+        'loginOnlyVerifiedUsers'=>true,
         'register'=>[            
              'name'=> ['first_name'=>'First name','last_name' => 'Last Name'],
              'default_user_type'=> 'registered',
@@ -44,7 +46,11 @@ return [
                 'subject'=> 'Verify your email address',
                 'thankyou'=> 'Thanks for signing up! Please check your email.',
                 'template'=> 'adminlte::emails.verify' 
-             ]
+             ],
+            'redirect'=>[
+                'autologin'=> true,
+                'route'=>'thankyou'
+            ]
         ]
     ]
 ];

@@ -11,7 +11,7 @@
         <div>
             Thanks for creating an account with the @config('adminlte.app.name') .
             Please follow the link below to verify your email address
-            {{ URL::to('register/verify/' . $verfication_code) }}.<br/>
+            {{ URL::to('register/verify/' . $verification_code) }}.<br/>
 
         </div>
 

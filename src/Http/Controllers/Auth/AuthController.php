@@ -4,6 +4,8 @@ namespace  Acacha\AdminLTETemplateLaravel\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -43,6 +45,11 @@ class AuthController extends Controller
     protected $registerView = '';
 
     /**
+     * Post register view
+     * @var string
+     */
+    protected $redirectPath = 'thankyou';
+    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -63,7 +70,6 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
       $register=config('adminlte.auth.register');
-      $verification_code= str_random($register['verification']['token_length']);
 
       if(!isset($register['validations'])){
           $validations=[
@@ -71,11 +77,13 @@ class AuthController extends Controller
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|confirmed|min:6',
                 ];
-        }
+       }else{
+          $validations=$register['validations'];
+      }
         
         // multi part name
         $data=$this->normalizeName($data,$register);
-        return Validator::make($data,$register['validations']);
+        return Validator::make($data,$validations);
     }
 
     /**
@@ -121,14 +129,55 @@ class AuthController extends Controller
 
            $user=User::create($new_user);
 
-           Flash::message($register['verification']['thankyou']);
+           \Session::flash('register_success', $register['verification']['thankyou']);
+
         }else{
             $user=User::create($new_user);
         }
 
         return $user;
     }
-    
+
+
+    public function register(Request $request)
+    {
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            $this->throwValidationException(
+                $request, $validator
+            );
+        }
+
+       $user= $this->create($request->all());
+
+       $redirect= config('adminlte.register.redirect');
+
+       if($redirect['autologin'])  Auth::guard($this->getGuard())->login($user);
+
+       if(isset($redirect['redirect']))
+          return redirect($redirect['redirect']);
+       else
+          return redirect($this->redirectPath());
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function getCredentials(Request $request)
+    {
+        $credentials = $request->only($this->loginUsername(), 'password');
+
+        if(config('adminlte.auth.loginOnlyVerifiedUsers')){
+            $credentials['is_verified']= 1;
+        }
+
+        return $credentials;
+    }
+
     private function normalizeName($data,$config=[]){
         
         $config=count($config) ? $config : config('adminlte.auth.register');
