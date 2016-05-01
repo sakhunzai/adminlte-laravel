@@ -2,7 +2,9 @@
 
 namespace Acacha\AdminLTETemplateLaravel\Http\Controllers\Auth;
 
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordController extends Controller
@@ -22,6 +24,8 @@ class PasswordController extends Controller
 
     protected $linkRequestView = '';
 
+    protected $resetView = '';
+
     /**
      * Create a new password controller instance.
      *
@@ -29,7 +33,27 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
-        $this->linkRequestView = config("adminlte.resetView");
+        $this->linkRequestView = config("adminlte.resetRequestView");
+        $this->resetView = config("adminlte.resetView");
         $this->middleware('guest');
     }
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->forceFill([
+            'password' => bcrypt($password),
+            'remember_token' => Str::random(60),
+        ])->save();
+
+        if(config("adminlte.auth.resetLogin") && 1==$user->is_verified )
+            Auth::guard($this->getGuard())->login($user);
+    }
+
 }

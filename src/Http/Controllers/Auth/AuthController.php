@@ -45,11 +45,6 @@ class AuthController extends Controller
     protected $registerView = '';
 
     /**
-     * Post register view
-     * @var string
-     */
-    protected $redirectPath = 'thankyou';
-    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -97,8 +92,6 @@ class AuthController extends Controller
         $register=config('adminlte.auth.register');
         
         $data=$this->normalizeName($data,$register);
-        
-        $verification_code= str_random($register['verification']['token_length']);
 
         $new_user=[
             'name' => $data['name'],
@@ -121,8 +114,10 @@ class AuthController extends Controller
         
 
         if( $register['verification']['enabled'] ){
-           
-           $new_user= array_merge($new_user,[
+
+            $verification_code= str_random($register['verification']['token_length']);
+
+            $new_user= array_merge($new_user,[
                  'verification_code' => $verification_code,
                  'is_verified'=> '0']
             );
