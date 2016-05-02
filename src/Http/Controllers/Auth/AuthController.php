@@ -1,6 +1,6 @@
 <?php
 
-namespace  Acacha\AdminLTETemplateLaravel\Http\Controllers\Auth;
+namespace Acacha\AdminLTETemplateLaravel\Http\Controllers\Auth;
 
 use App\User;
 use Validator;
@@ -33,15 +33,15 @@ class AuthController extends Controller
     protected $redirectTo = '/home';
 
     /**
-    * Default login view 
-    * @var string
-    */
+     * Default login view
+     * @var string
+     */
     protected $loginView = '';
 
     /**
-    * Default register view
-    * @var string
-    */
+     * Default register view
+     * @var string
+     */
     protected $registerView = '';
 
     /**
@@ -50,84 +50,84 @@ class AuthController extends Controller
      * @return void
      */
     public function __construct()
-    {       
-        $this->loginView=config('adminlte.loginView'); 
-        $this->registerView=config('adminlte.registerView'); 
+    {
+        $this->loginView = config('adminlte.loginView');
+        $this->registerView = config('adminlte.registerView');
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-      $register=config('adminlte.auth.register');
+        $register = config('adminlte.auth.register');
 
-      if(!isset($register['validations'])){
-          $validations=[
-                    'name' => 'required|max:255',
-                    'email' => 'required|email|max:255|unique:users',
-                    'password' => 'required|confirmed|min:6',
-                ];
-       }else{
-          $validations=$register['validations'];
-      }
-        
+        if (!isset($register['validations'])) {
+            $validations = [
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|confirmed|min:6',
+            ];
+        } else {
+            $validations = $register['validations'];
+        }
+
         // multi part name
-        $data=$this->normalizeName($data,$register);
-        return Validator::make($data,$validations);
+        $data = $this->normalizeName($data, $register);
+        return Validator::make($data, $validations);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
-        $register=config('adminlte.auth.register');
-        
-        $data=$this->normalizeName($data,$register);
+        $register = config('adminlte.auth.register');
 
-        $new_user=[
+        $data = $this->normalizeName($data, $register);
+
+        $new_user = [
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'type' => $register['default_user_type'],
         ];
-        
+
 
         //if user name is multi part
-        if(isset($register['name'])){
-            $new_user=array_merge($new_user, array_intersect_key($data,$register['name'])); 
-        }        
-        
+        if (isset($register['name'])) {
+            $new_user = array_merge($new_user, array_intersect_key($data, $register['name']));
+        }
+
         //if extra field to be captured
-        if(isset($register['extra_fields']) && count($register['extra_fields'])){
-            $extra= array_combine($register['extra_fields'],array_fill(0, count($register['extra_fields']), null));
-            $new_user=array_merge($new_user, array_intersect_key($data, $extra)); 
-        }        
-        
+        if (isset($register['extra_fields']) && count($register['extra_fields'])) {
+            $extra = array_combine($register['extra_fields'], array_fill(0, count($register['extra_fields']), null));
+            $new_user = array_merge($new_user, array_intersect_key($data, $extra));
+        }
 
-        if( $register['verification']['enabled'] ){
 
-            $verification_code= str_random($register['verification']['token_length']);
+        if ($register['verification']['enabled']) {
 
-            $new_user= array_merge($new_user,[
-                 'verification_code' => $verification_code,
-                 'is_verified'=> '0']
+            $verification_code = str_random($register['verification']['token_length']);
+
+            $new_user = array_merge($new_user, [
+                    'verification_code' => $verification_code,
+                    'is_verified' => '0']
             );
 
-           $user=User::create($new_user);
+            $user = User::create($new_user);
 
-           \Session::flash('register_success', $register['verification']['thankyou']);
+            \Session::flash('register_success', $register['verification']['thankyou']);
 
-        }else{
-            $user=User::create($new_user);
+        } else {
+            $user = User::create($new_user);
         }
 
         return $user;
@@ -144,58 +144,64 @@ class AuthController extends Controller
             );
         }
 
-       $user= $this->create($request->all());
+        $user = $this->create($request->all());
 
-       $redirect= config('adminlte.register.redirect');
+        $redirect = config('adminlte.register.redirect');
 
-       if($redirect['autologin'])  Auth::guard($this->getGuard())->login($user);
+        if ($redirect['autologin']) Auth::guard($this->getGuard())->login($user);
 
-       if(isset($redirect['redirect']))
-          return redirect($redirect['redirect']);
-       else
-          return redirect($this->redirectPath());
+        if (isset($redirect['redirect']))
+            return redirect($redirect['redirect']);
+        else
+            return redirect($this->redirectPath());
     }
 
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function getCredentials(Request $request)
     {
         $credentials = $request->only($this->loginUsername(), 'password');
 
-        if(config('adminlte.auth.loginOnlyVerifiedUsers')){
-            $credentials['is_verified']= 1;
+        if (config('adminlte.auth.loginOnlyVerifiedUsers')) {
+            $credentials['is_verified'] = 1;
         }
 
         return $credentials;
     }
 
-    private function normalizeName($data,$config=[]){
-        
-        $config=count($config) ? $config : config('adminlte.auth.register');
-        
-        if(isset($config['name'])){
-          $full_name= array_intersect_key($data,$config['name']);
-          $data['name']=join(' ',array_filter($full_name));
+    private function normalizeName($data, $config = [])
+    {
+        $config = count($config) ? $config : config('adminlte.auth.register');
+
+        if (isset($config['name'])) {
+            $full_name = array_intersect_key($data, $config['name']);
+            $data['name'] = join(' ', array_filter($full_name));
         }
-        
+
         return $data;
     }
-    
+
     protected function authenticated($request, $user)
     {
-        $redirect=config('adminlte.auth.login.redirect',[]);
+        $redirect = config('adminlte.auth.login.redirect', []);
 
-        $redirectTo='';
-        if (isset($redirect['enabled']) && $redirect['enabled']==true ) {
-            $handler= app("AdminLTELoginRedirect");
-            $redirectTo=$handler->getRedirect($user);
+        $redirectTo = '';
+        if (isset($redirect['enabled']) && $redirect['enabled'] == true) {
+            $class = config('adminlte.auth.login.redirect.handler');
+            $interface = "Acacha\\AdminLTETemplateLaravel\\Contracts\\LoginRedirectContract";
+            $handler = new $class;
+            if ($handler instanceof $interface) {
+                $redirectTo = $handler->getRedirect($user);
+            } else {
+                throw new BindingResolutionException;
+            }
         }
 
-        $redirectTo=$redirectTo=='' ? $this->redirectPath() :$redirectTo ;
+        $redirectTo = $redirectTo == '' ? $this->redirectPath() : $redirectTo;
         return redirect()->intended($redirectTo);
     }
 }

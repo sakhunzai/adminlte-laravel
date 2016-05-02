@@ -31,11 +31,6 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         });
         
         $this->mergeConfigFrom(AdminLTE::getConfig(), 'adminlte');
-
-        /* $this->app->bind('AdminLTELoginRedirect', function () {
-            return config('adminlte.auth.login.redirect.handler');
-        });
-        */
                
     }
 
