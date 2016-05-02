@@ -184,4 +184,18 @@ class AuthController extends Controller
         
         return $data;
     }
+    
+    protected function authenticated($request, $user)
+    {
+        $redirect=config('adminlte.auth.login.redirect',[]);
+
+        $redirectTo='';
+        if (isset($redirect['enabled']) && $redirect['enabled']==true ) {
+            $handler= app("AdminLTELoginRedirect");
+            $redirectTo=$handler->getRedirect($user);
+        }
+
+        $redirectTo=$redirectTo=='' ? $this->redirectPath() :$redirectTo ;
+        return redirect()->intended($redirectTo);
+    }
 }

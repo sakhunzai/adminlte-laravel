@@ -27,7 +27,17 @@ return [
     'resetRequestView'=>'adminlte::auth.passwords.email',
     'resetView'=>'adminlte::auth.passwords.reset',
     'thankyouView' =>'adminlte::auth.thankyou',
+    'middleware' => ['web'],
+    'prefix' => '',
     'auth'=>[
+        'login'=>[
+            'redirect'=>[
+                'enabled' => true,
+                'handler' => 'Acacha\AdminLTETemplateLaravel\LoginRedirect'
+            ]
+        ],
+        'middleware' => ['web', 'auth'],
+        'prefix' => '',
         'loginOnlyVerifiedUsers'=>true,
         'resetLogin'=>false,
         'register'=>[            
@@ -53,6 +63,6 @@ return [
                 'autologin'=> true,
                 'route'=>'thankyou'
             ]
-        ]
-    ]
+        ],
+     ]
 ];
