@@ -146,12 +146,12 @@ class AuthController extends Controller
 
         $user = $this->create($request->all());
 
-        $redirect = config('adminlte.register.redirect');
+        $redirect = config('adminlte.auth.register.redirect');
 
         if ($redirect['autologin']) Auth::guard($this->getGuard())->login($user);
 
-        if (isset($redirect['redirect']))
-            return redirect($redirect['redirect']);
+        if (isset($redirect['route']))
+            return redirect($redirect['route']);
         else
             return redirect($this->redirectPath());
     }
