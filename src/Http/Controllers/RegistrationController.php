@@ -16,11 +16,12 @@ class RegistrationController extends BaseController
 
         if($verification_code) {
             $user = User::whereVerificationCode($verification_code)->first();
-            $user->is_verified = 1;
-            $user->verification_code = null;
-            $user->save();
-
-            $data=['level'=>'success','message'=>'You have successfully verified your account'];
+            if($user){
+                $user->is_verified = 1;
+                $user->verification_code = null;
+                $user->save();
+                $data=['level'=>'success','message'=>'You have successfully verified your account'];
+           }
         }
 
         \Session::flash('flash', $data);
