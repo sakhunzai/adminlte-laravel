@@ -12,25 +12,20 @@ class RegistrationController extends BaseController
     public function verify($verification_code)
     {
 
-        if( ! $verification_code )
-        {
-            throw new \Exception('Invalid verification code');
+        $data=['level'=>'danger','message'=>'Invalid verification code'];
+
+        if($verification_code) {
+            $user = User::whereVerificationCode($verification_code)->first();
+            $user->is_verified = 1;
+            $user->verification_code = null;
+            $user->save();
+
+            $data=['level'=>'success','message'=>'You have successfully verified your account'];
         }
 
-        $user = User::whereVerificationCode($verification_code)->first();
+        \Session::flash('flash', $data);
 
-        if ( ! $user)
-        {
-            throw new \Exception('Invalid verification code');
-        }
-
-        $user->is_verified = 1;
-        $user->verification_code = null;
-        $user->save();
-
-        \Session::flash('verify_success', 'You have successfully verified your account.');
-
-        return redirect($this->redirectPath());
-
+        return view('adminlte::auth.verify');
     }
+
 }

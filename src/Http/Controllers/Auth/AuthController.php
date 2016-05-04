@@ -124,8 +124,6 @@ class AuthController extends Controller
 
             $user = User::create($new_user);
 
-            \Session::flash('register_success', $register['verification']['thankyou']);
-
         } else {
             $user = User::create($new_user);
         }
@@ -148,12 +146,19 @@ class AuthController extends Controller
 
         $redirect = config('adminlte.auth.register.redirect');
 
-        if ($redirect['autologin']) Auth::guard($this->getGuard())->login($user);
+        if ($redirect['autologin']){
+            Auth::guard($this->getGuard())->login($user);
+            $message="Welcome ".$user->name;
+        }
+        else
+           $message=config('adminlte.auth.register.verification.thankyou','You are registered successfully.');
+
+        $flash =['flash' => ['message' => $message, 'level' => 'success']];
 
         if (isset($redirect['route']))
-            return redirect($redirect['route']);
+            return redirect($redirect['route'])->with($flash);
         else
-            return redirect($this->redirectPath());
+            return redirect($this->redirectPath())->with($flash);
     }
 
     /**
