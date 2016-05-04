@@ -8,7 +8,7 @@
 <body class="hold-transition login-page">
 <div class="login-box" style="width:30%">
 
-    {{--@include('adminlte::partials.flash')--}}
+    @include('adminlte::partials.flash')
 
     You may <a href="{{ url('/login') }}" class="text-center">Login</a> into your account after verfication.
 
