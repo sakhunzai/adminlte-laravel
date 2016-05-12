@@ -106,5 +106,18 @@ class AdminLTE
         ];
     }
     
+    /**
+     * event and listenrs copy paths.
+     *
+     * @return array
+     */
+    public function listeners()
+    {
+        return [
+            ADMINLTETEMPLATE_PATH.'/src/Events' => app_path().'/Events',
+            ADMINLTETEMPLATE_PATH.'/src/Listeners' => app_path().'/Listeners',
+        ];
+    }
+    
         
 }
