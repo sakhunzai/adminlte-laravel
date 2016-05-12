@@ -59,11 +59,13 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
+                    @if(@config('adminlte.auth.register.terms_of_service',false))
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> I agree to the <a href="#">terms</a>
+                                <input type="checkbox" name="terms_of_service"> I agree to the <a href="#" data-target="#terms_of_service" data-toggle="modal" >terms</a>
                             </label>
                         </div>
+                    @endif
                     </div><!-- /.col -->
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
@@ -79,7 +81,11 @@
     </div><!-- /.register-box -->
 
     @include('adminlte::layouts.partials.scripts_auth')
-
+    
+    @if(@config('adminlte.auth.register.terms_of_service',false))
+        @include('adminlte::partials.terms_of_service')
+    @endif
+    
     <script>
         $(function () {
             $('input').iCheck({

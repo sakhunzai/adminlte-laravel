@@ -93,5 +93,18 @@ class AdminLTE
             ADMINLTETEMPLATE_PATH.'/bower.json' => base_path('bower.json'),
         ];
     }
+    
+    /**
+     * migrations copy path.
+     *
+     * @return array
+     */
+    public function migrations()
+    {
+        return [
+            ADMINLTETEMPLATE_PATH.'/src/database/migrations' => database_path().'/migrations',
+        ];
+    }
+    
         
 }

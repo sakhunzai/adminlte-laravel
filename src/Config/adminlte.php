@@ -27,6 +27,7 @@ return [
     'resetRequestView'=>'adminlte::auth.passwords.email',
     'resetView'=>'adminlte::auth.passwords.reset',
     'thankyouView' =>'adminlte::auth.thankyou',
+    'termsOfService' =>'adminlte::partials.terms_of_service',
     'middleware' => ['web'],
     'prefix' => '',
     'auth'=>[
@@ -40,7 +41,8 @@ return [
         'prefix' => '',
         'loginOnlyVerifiedUsers'=>true,
         'resetLogin'=>false,
-        'register'=>[            
+        'register'=>[
+             'terms_of_service'=> true,
              'name'=> ['first_name'=>'First name','last_name' => 'Last Name'],
              'default_user_type'=> 'registered',
              'extra_fields'=>['phone'],
@@ -50,6 +52,7 @@ return [
                 'name' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|confirmed|min:6',
+                'terms_of_service' => 'accepted',
              ],
              'verification'=>[
                 'enabled'=> true,

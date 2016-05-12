@@ -50,6 +50,7 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
         $this->publishViews();
         $this->publishResourceAssets();
         $this->publishTests();
+        $this->publishMigrations();
     }
 
     /**
@@ -134,5 +135,13 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     private function publishTests()
     {
         $this->publishes(AdminLTE::tests(), 'adminlte');
+    }
+    
+    /**
+     * Publish package migrations to Laravel project.
+     */
+    private function publishMigrations()
+    {
+        $this->publishes(AdminLTE::migrations(), 'adminlte');
     }
 }

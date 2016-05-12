@@ -20,20 +20,38 @@ trait Skins
        
     public function getICheckColor($skin)
     {
-        $colorSet=['aero','blue','flat','green','grey','orange','pink','purple','red','yellow'];
-        $icheckSkin=$this->getICheckSkin();
-        if($this->icheckSkinHasColorSet($icheckSkin)){
+        $colorSet=['aero','blue','flat','green','grey','orange','pink','purple','red','yellow'];        
+        if($this->icheckSkinHasColorSet($skin)){
             $color=Config('adminlte.icheckColor');
-            if($icheckSkin==$color || array_has($colorSet,$color))
+            if($skin==$color || in_array($color,$colorSet))
                 return $color;
             else
-                return $icheckSkin; 
+                return $skin; 
         }else
-            return $icheckSkin;
+            return $skin;
     }
     
     public function iCheckSkinHasColorSet($icheckSkin){
         return in_array($icheckSkin,['flat','line','minimal','square']);
     }
 
+    public function getSkinCss(){
+        $style=$this->getSkin();
+        return  asset('/css/admin-lte/skins/skin-'. $style .'.min.css');
+    }
+    
+    public function getICheckSkinCss(){
+        $skin=$this->getICheckSkin();
+        $color=$this->getICheckColor($skin);
+        return  asset('/plugins/iCheck/skins/'. $skin .'/'. $color .'.css');
+    }
+    
+    public function getSkinStyle(){
+        return 'skin-'.$this->getSkin();
+    }
+    
+    public function getControlsideBarBg(){
+        $desitiy=last(explode('-',$this->getSkin()));
+        return $desitiy=='light' ? 'control-sidebar-dark' : 'control-sidebar-dark';
+    }   
 }
