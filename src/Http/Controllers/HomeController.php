@@ -32,5 +32,11 @@ class HomeController extends Controller
     {
         return view(config("adminlte.homeView"));
     }
+    
+        
+    public function profile()
+    {
+        return "";
+    }
 
 }

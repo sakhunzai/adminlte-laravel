@@ -24,5 +24,10 @@ Route::group(['prefix' => config('adminlte.prefix'), 'middleware' => config('adm
 Route::group(['prefix' => config('adminlte.auth.prefix'), 'middleware' => config('adminlte.auth.middleware')], function () {
 
     Route::get('/home', 'HomeController@index');
+        
+    Route::post('profile', [
+        'as' => 'profile',
+        'uses' => 'HomeController@profile'
+    ]);
 });
 

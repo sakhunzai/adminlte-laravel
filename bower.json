@@ -5,6 +5,7 @@
     "bootstrap": "^3.x",
     "iCheck": "icheck#^1.0.2",
     "jquery.scrollTo": "^2.1.2",
-    "jquery.localScroll": "^1.4.0"
+    "jquery.localScroll": "^1.4.0",
+    "Croppie": "croppie#^2.1.0"
   }
 }

@@ -80,7 +80,12 @@ var config = {
        {
            src:[bower+'iCheck*/**'],
            dest:'public/plugins'
-       }
+       },
+       {
+           src:[bower+'Croppie'],
+           dest:'public/plugins'
+       },
+    
   ] 
    
 }
