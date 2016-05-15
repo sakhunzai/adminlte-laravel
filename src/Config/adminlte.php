@@ -19,6 +19,7 @@ return [
     'footer' => true,
     'sidebar' => true, //show/hide
     'profileImg' => '/img/admin-lte/profile/avatar-male-1.png', //maybe img adropdown /upload option
+    'profileImgDir'=> storage_path('app/uploads'),
     'socialLogin'=>false,
     'welcomeView'=>'adminlte::welcome',
     'homeView' => 'adminlte::home',

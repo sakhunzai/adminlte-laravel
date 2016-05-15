@@ -11,3 +11,6 @@
       Both of these plugins are recommended to enhance the
       user experience. Slimscroll is required when using the
       fixed layout. -->
+
+<!-- croppie - from image cropping -->
+<script src="{{ asset('/plugins/Croppie/croppie.js') }}" type="text/javascript"></script>

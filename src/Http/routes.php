@@ -29,5 +29,8 @@ Route::group(['prefix' => config('adminlte.auth.prefix'), 'middleware' => config
         'as' => 'profile',
         'uses' => 'HomeController@profile'
     ]);
+
+    Route::get('images/{file}','ImageController@getImage');
+
 });
 

@@ -82,7 +82,7 @@ var config = {
            dest:'public/plugins'
        },
        {
-           src:[bower+'Croppie'],
+           src:[bower+'Croppie*/**'],
            dest:'public/plugins'
        },
     

@@ -1,12 +1,9 @@
-{!! Form::open(['route' => ['profile'], 'file' => true, 'method' => 'post', 'id' => 'profile-image-upload']) !!}
-
-<div class="alert alert-danger display-none error">
-     <p>File must be an image</p>
- </div>
+{!! Form::open(['route' => ['profile'], 'file' => true, 'method' => 'post', 'class'=>'profile-form', 'id'=>'profile-form']) !!}
 
  <div class="form-group">
-  {!! Form::label('upload', 'Upload Photo') !!}
-  {!! Form::file('upload', ['id' => 'file-select', 'class' => 'form-control upload-box']) !!}
+  <div id="upload-target"></div>
+  <input type="hidden" id="imagebase64" name="imagebase64">
+  {!! Form::file('upload', ['id' => 'profile-image',  'accept'=>"image/*", 'class' => 'form-control upload-box']) !!}
  </div>
 
 {!! Form::close() !!}

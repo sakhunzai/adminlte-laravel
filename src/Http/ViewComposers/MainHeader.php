@@ -3,6 +3,7 @@
 namespace Acacha\AdminLTETemplateLaravel\Http\ViewComposers;
 
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class MainHeader
 {
@@ -10,7 +11,7 @@ class MainHeader
         $view->with('header',(object)[
             'logoSmall'=> $this->makeTextLogo(Config('adminlte.abbr')),
             'logoLarge'=> $this->makeTextLogo(Config('adminlte.title')),
-            'profileImg' => asset(Config('adminlte.profileImg')), //default, TODO override by user profile img
+            'profileImg' => '/images/'.(Auth::user()->avatar ? Auth::user()->avatar : 'default.png'),
             'showSidebar' => Config('adminlte.sidebar'),
         ]);
     }

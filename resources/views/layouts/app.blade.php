@@ -33,10 +33,7 @@ desired effect
 <div class="wrapper">
 
     @include('adminlte::layouts.partials.mainheader')
-    
-    <!-- profile edit form  -->
-    @include('adminlte::partials.profile')
-     
+
     @include('adminlte::layouts.partials.sidebar')
 
     <!-- Content Wrapper. Contains page content -->
