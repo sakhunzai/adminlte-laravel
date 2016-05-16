@@ -55,7 +55,7 @@ class HomeController extends Controller
             $user->save();
             $response = array(
                 'status' => 'success',
-                'avatar' => '/images/'.$user->avatar
+                'avatar' => url('images/'.$user->avatar)
             );
         }else{
             $response = array(

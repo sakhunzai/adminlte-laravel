@@ -11,7 +11,7 @@ class MainHeader
         $view->with('header',(object)[
             'logoSmall'=> $this->makeTextLogo(Config('adminlte.abbr')),
             'logoLarge'=> $this->makeTextLogo(Config('adminlte.title')),
-            'profileImg' => '/images/'.(Auth::user()->avatar ? Auth::user()->avatar : 'default.png'),
+            'profileImg' => url('images/'.(Auth::user()->avatar ? Auth::user()->avatar : 'default.png')),
             'showSidebar' => Config('adminlte.sidebar'),
         ]);
     }
