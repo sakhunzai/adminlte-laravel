@@ -34,7 +34,7 @@
                                     <a href="#">
                                         <div class="pull-left">
                                             <!-- User Image -->
-                                            <img src="{{ $header->profileImg }}" class="img-circle" alt="User Image"/>
+                                            <img src="{{ $header->profileImg }}" class="img-circle avatar" alt="User Image"/>
                                         </div>
                                         <!-- Message title and timestamp -->
                                         <h4>
