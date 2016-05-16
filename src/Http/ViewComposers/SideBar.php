@@ -8,7 +8,7 @@ class SideBar
 {
     public function compose($view){
         $view->with('sidebar',(object)[
-            'profileImg' => asset(Config('adminlte.profileImg'))
+            'profileImg' => url('images/'.(Auth::user()->avatar ? Auth::user()->avatar : 'default.png'))
         ]);
     }
     
