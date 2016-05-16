@@ -18,6 +18,7 @@ class UpdateUsersTable extends Migration
             $table->boolean('is_verified');
             $table->boolean('is_blocked');
             $table->string('verification_code',40);
+            $table->string('avatar');
             $table->boolean('terms_of_service');
         });
     }
@@ -35,6 +36,7 @@ class UpdateUsersTable extends Migration
             $table->dropColumn('is_verified');
             $table->dropColumn('is_blocked');
             $table->dropColumn('verification_code');
+            $table->dropColumn('avatar');
             $table->dropColumn('terms_of_service');
         });
     }

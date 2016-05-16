@@ -14,3 +14,6 @@
 
 <!-- croppie - from image cropping -->
 <script src="{{ asset('/plugins/Croppie/croppie.js') }}" type="text/javascript"></script>
+
+
+@yield('user-scripts')

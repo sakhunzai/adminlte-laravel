@@ -17,6 +17,9 @@
     <link href="{{ $header->skinCss }}" rel="stylesheet" type="text/css" />
     <!-- iCheck -->
     <link href="{{ $header->icheckSkinCss }}" rel="stylesheet" type="text/css" />
+    
+    <!-- croppie plugin -->    
+    <link href="{{ asset('/plugins/Croppie/croppie.css')  }}" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

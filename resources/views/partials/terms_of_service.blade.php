@@ -1,5 +1,5 @@
 <div class="modal fade" id="terms_of_service">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-info">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
