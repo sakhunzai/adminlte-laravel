@@ -21,6 +21,7 @@ return [
     'profileImg' => '/img/admin-lte/profile/avatar-male-1.png', //maybe img adropdown /upload option
     'profileImgDir'=> storage_path('app/uploads'),
     'socialLogin'=>false,
+    'welcomeRedirect'=>'',
     'welcomeView'=>'adminlte::welcome',
     'homeView' => 'adminlte::home',
     'loginView' =>'adminlte::auth.login',

@@ -12,6 +12,9 @@ Route::group(['prefix' => config('adminlte.prefix'), 'middleware' => config('adm
     });
 
     Route::get('/', function () {
+        if(config('adminlte.welcomeRedirect','')!=='')
+            return redirect(config('adminlte.welcomeRedirect'));
+
         return view(config('adminlte.welcomeView'));
     });
 
