@@ -71,13 +71,12 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
     protected function setViewComposers()
     {
         $views='Acacha\AdminLTETemplateLaravel\Http\ViewComposers';
-        view()->composer('adminlte::layouts.app',$views.'\Layout');
-        view()->composer('adminlte::layouts.partials.htmlheader',$views.'\HtmlHeader');
-        view()->composer('adminlte::layouts.partials.mainheader',$views.'\MainHeader');
-        view()->composer('adminlte::layouts.partials.contentheader',$views.'\BreadCrumb');
-        view()->composer('adminlte::layouts.partials.sidebar',$views.'\SideBar');
-        view()->composer('adminlte::layouts.partials.footer',$views.'\Footer');
-        
+        view()->composer('adminlte::*',function($view) use($views){
+            if(($view && !$view->layout)) {
+                $layout=new \Acacha\AdminLTETemplateLaravel\Http\ViewComposers\Layout();
+                $layout->compose($view);
+            }
+        });
     }
     
     /**
@@ -116,7 +115,7 @@ class AdminLTETemplateServiceProvider extends ServiceProvider
      */
     private function publishViews()
     {
-        $this->loadViewsFrom(ADMINLTETEMPLATE_PATH.'/resources/views/', 'adminlte');
+        $this->loadViewsFrom(ADMINLTETEMPLATE_PATH.'/resources/views', 'adminlte');
 
         //I dont thing we need to publish this 
         //$this->publishes(AdminLTE::views(), 'adminlte');

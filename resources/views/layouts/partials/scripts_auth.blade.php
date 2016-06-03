@@ -1,6 +1,6 @@
-<!-- jQuery 2.1.4 -->
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<!-- Bootstrap 3.3.2 JS -->
-<script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<!-- iCheck -->
-<script src="{{ asset('/plugins/iCheck/icheck.min.js') }}" type="text/javascript"></script>
+@foreach($layout->scripts as $script)
+    @if(in_array('auth',$script['context']))
+    <!-- {{ $script['info'] }} -->
+    <script src="{{ isset($script['external']) ? $script['external'] : asset($script['path']) }}"  ></script>
+    @endif
+@endforeach

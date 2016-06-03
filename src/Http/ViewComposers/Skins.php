@@ -2,6 +2,8 @@
 
 namespace Acacha\AdminLTETemplateLaravel\Http\ViewComposers;
 
+use Illuminate\Support\Facades\Auth;
+
 trait Skins
 {
     
@@ -53,5 +55,19 @@ trait Skins
     public function getControlsideBarBg(){
         $desitiy=last(explode('-',$this->getSkin()));
         return $desitiy=='light' ? 'control-sidebar-dark' : 'control-sidebar-dark';
-    }   
+    } 
+    
+    public function profileImage()
+    {
+        return  url('images/'.(!Auth::guest() && Auth::user()->avatar ? Auth::user()->avatar : 'default.png'));
+    }
+    
+    private function makeTextLogo($text)
+    {
+         $parts=explode('|',$text);
+         $left= head($parts);
+         $right= (count($parts)> 1 ? join('', array_except($parts,0)) :  '');
+         
+         return "<b>$left</b>$right";
+    }  
 }

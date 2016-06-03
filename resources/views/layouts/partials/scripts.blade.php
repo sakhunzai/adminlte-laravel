@@ -1,19 +1,13 @@
-<!-- REQUIRED JS SCRIPTS -->
+@section('footerscripts')  
+        <!-- REQUIRED JS SCRIPTS -->
+        
+    @foreach($layout->scripts as $script)
+        @if(in_array('*',$script['context']))
+        <!-- {{ $script['info'] }} -->
+        <script src="{{ isset($script['external']) ? $script['external'] : asset($script['path']) }}"  ></script>
+        @endif
+    @endforeach
+@show
 
-<!-- jQuery 2.1.4 -->
-<script src="{{ asset('/js/jquery.min.js') }}"></script>
-<!-- Bootstrap 3.3.2 JS -->
-<script src="{{ asset('/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<!-- AdminLTE App -->
-<script src="{{ asset('/js/admin-lte/AdminLTE.min.js') }}" type="text/javascript"></script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-      Both of these plugins are recommended to enhance the
-      user experience. Slimscroll is required when using the
-      fixed layout. -->
-
-<!-- croppie - from image cropping -->
-<script src="{{ asset('/plugins/Croppie/croppie.js') }}" type="text/javascript"></script>
-
-
-@yield('user-scripts')
+    <!-- USER SCRIPTS -->
+    @yield('user-scripts')

@@ -29,15 +29,17 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="{{ $layout->skinStyle }} sidebar-mini">
+<body class="{{ $layout->skinStyle }} {{ $layout->name }}">
 <div class="wrapper">
 
     @include('adminlte::layouts.partials.mainheader')
-
+    
+     
     @include('adminlte::layouts.partials.sidebar')
-
+    
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+
+    <div class="content-wrapper" >
 
         @include('adminlte::layouts.partials.contentheader')
 

@@ -1,14 +1,15 @@
+@if($layout->showSidebar)
 <!-- Left side column. contains the logo and sidebar -->
 <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
-
+    
         <!-- Sidebar user panel (optional) -->
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ $sidebar->profileImg  }}" class="img-circle avatar" alt="User Image" />
+                    <img src="{{ $layout->profileImg  }}" class="img-circle avatar" alt="User Image" />
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name }}</p>
@@ -18,6 +19,7 @@
             </div>
         @endif
 
+        @if($layout->showSideSearch)
         <!-- search form (Optional) -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -28,7 +30,9 @@
             </div>
         </form>
         <!-- /.search form -->
+        @endif
 
+        @if($layout->showSideMenu)
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu">
             <li class="header">HEADER</li>
@@ -43,6 +47,8 @@
                 </ul>
             </li>
         </ul><!-- /.sidebar-menu -->
+       @endif
     </section>
     <!-- /.sidebar -->
 </aside>
+@endif
