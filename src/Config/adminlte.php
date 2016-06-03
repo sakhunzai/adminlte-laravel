@@ -32,7 +32,7 @@ return [
     'termsOfService' =>'adminlte::partials.terms_of_service',
     'middleware' => ['web'],
     'prefix' => '',
-    'homeController'=>'',
+    'homeController'=>'HomeController@index',
     'auth'=>[
         'login'=>[
             'redirect'=>[
