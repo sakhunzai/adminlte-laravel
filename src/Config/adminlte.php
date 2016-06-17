@@ -106,8 +106,8 @@ return [
     'assets'=>[
         'styles'=>[
             ['path'=>'/css/bootstrap.min.css' ,'info'=>'Bootstrap 3.3.4'],
-            ['external'=>'https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css' ,'info'=>'Font Awesome Icons '],
-            ['external'=>'https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css' ,'info'=>'Ionicons'],
+            ['path'=>'/css/font-awesome.min.css' ,'info'=>'Font Awesome Icons '],
+            ['path'=>'/css/ionicons.min.cs' ,'info'=>'Ionicons'],
             ['path'=>'/css/admin-lte/AdminLTE.min.css' ,'info'=>'AdmintLTE Theme'],
             ['path'=>'/plugins/Croppie/croppie.css' ,'info'=>'Croppie Plugin'],
         ],
