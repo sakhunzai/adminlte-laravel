@@ -35,7 +35,11 @@ return [
     'langs' => ['en:English'], //TODO
     'lang' => 'en', //TODO multiple support languages may be expose a dropdown
     'footer' => true,
-    'sidebar' => true, //show/hide
+    'sidebar' => [
+        'show'=>true, //show/hide
+        'search'=> true,
+        'menu'=> true,
+    ],
     'controlsidebar' => true, //show/hide
     'headermenus'=>[
         'show'=>false,
@@ -45,6 +49,7 @@ return [
             'adminlte::layouts.partials.menu.tasks'
         ]
     ],
+    
     'profileImg' => '/img/admin-lte/profile/avatar-male-1.png', //maybe img adropdown /upload option
     'profileImgDir'=> storage_path('app/uploads'),
     'socialLogin'=>false,
