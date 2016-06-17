@@ -28,6 +28,7 @@ class Layout
                     'headerMenus'=>Config('adminlte.headermenus'),
                     'styles'=>$this->getStyles(),
                     'scripts'=>$this->getScripts(),
+                    'shims' => $this->getShims(),
                     'breadcrumbs'=>$this->getBreadCrumbs(),
                     'package'=>Config('adminlte.package'),
         ]);
@@ -54,6 +55,12 @@ class Layout
     {
         $scripts=Config('adminlte.assets.scripts');
         return (is_array($scripts) ? $scripts : []);
+    }
+    
+    public function getShims()
+    {
+        $shims=Config('adminlte.assets.shims');
+        return (is_array($shims) ? $shims : []);
     }
     
     public function getBreadCrumbs()

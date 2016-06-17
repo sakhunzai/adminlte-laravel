@@ -10,10 +10,29 @@
     @endforeach
 @show
   
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+
+@section('headershims')
+    @foreach($layout->shims as $shim)
+        <!--[if {{ $shim['condition']}}]>
+                        
+        @if(isset($shim['scripts']))
+            
+            @foreach($shim['scripts'] as $script)
+                @if(in_array('*',$script['context']))
+                    <!-- {{ $script['info'] }} -->
+                    <script src="{{ isset($script['external']) ? $script['external'] : asset($script['path']) }}"  ></script>
+            @endif
+            @endforeach
+        @endif    
+        
+        @if(isset($shim['styles']))
+            @foreach($shim['styles'] as $style)
+                <!-- {{ $style['info'] }} -->
+                <link href="{{ isset($style['external']) ? $style['external'] : asset($style['path']) }}" rel="stylesheet" type="text/css" />
+            @endforeach
+        @endif
+        
+        <![endif]-->
+    @endforeach
+@show
 </head>

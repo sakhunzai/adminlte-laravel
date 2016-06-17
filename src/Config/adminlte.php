@@ -116,7 +116,25 @@ return [
             ['path'=>'/js/bootstrap.min.js' ,'info'=>'Bootstrap 3.3.2 JS','context'=>['*','auth']],
             ['path'=>'/js/admin-lte/AdminLTE.min.js' ,'info'=>'AdminLTE App','context'=>['*','auth']], 
             ['path'=>'/plugins/iCheck/icheck.min.js' ,'info'=>'iCheck','context'=>['auth']], 
-            ['path'=>'/plugins/Croppie/croppie.js' ,'info'=>'Croppie - from image cropping','context'=>['*']],
-        ]
+            ['path'=>'/plugins/Croppie/croppie.js' ,'info'=>'Croppie - from image cropping','context'=>['*']]
+        ],
+        'shims'=>[
+            [
+                'condition'=>'lt IE 9',
+                'scripts'=>[
+                    [
+                        'path'=>'/plugins/html5shiv/html5shiv.min.js' ,
+                        'info'=>'HTML5 Shim IE8 support of HTML5 elements',
+                        'context'=>['*'],
+                    ],
+                    [
+                        'path'=>'/plugins/respond/respond.min.js',
+                        'info'=>"Respond.js IE8 support of media queries, does not work if you view the page via file:// ",
+                        'context'=>['*']
+                    ]
+                ]
+         ]
+      ],
+      
     ],
 ];

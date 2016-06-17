@@ -6,6 +6,12 @@
     "iCheck": "icheck#^1.0.2",
     "jquery.scrollTo": "^2.1.2",
     "jquery.localScroll": "^1.4.0",
-    "Croppie": "croppie#^2.1.0"
-  }
+    "Croppie": "croppie#^2.1.0",
+    "components-font-awesome": "^4.6.3",
+    "Ionicons": "ionicons#^2.0.1"
+  },
+  "devDependencies": {
+      "html5shiv": "^3.7.3",
+      "respond": "^1.4.2"
+    }
 }
