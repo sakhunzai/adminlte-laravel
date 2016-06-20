@@ -43,6 +43,7 @@ return [
         'middleware' => ['web', 'auth'],
         'prefix' => '',
         'loginOnlyVerifiedUsers'=>true,
+        'is_verified_equal'=> 2,
         'resetLogin'=>false,
         'register'=>[
              'terms_of_service'=> true,
