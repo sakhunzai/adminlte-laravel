@@ -173,6 +173,7 @@ class AuthController extends Controller
 
         if (config('adminlte.auth.loginOnlyVerifiedUsers')) {
             $credentials['is_verified'] = 1;
+            $credentials['is_blocked']  = 0;
         }
 
         return $credentials;
