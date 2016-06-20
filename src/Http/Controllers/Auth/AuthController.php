@@ -172,7 +172,7 @@ class AuthController extends Controller
         $credentials = $request->only($this->loginUsername(), 'password');
 
         if (config('adminlte.auth.loginOnlyVerifiedUsers')) {
-            $credentials['is_verified'] = 1;
+            $credentials['is_verified'] = config('adminlte.auth.is_verified_equal');
             $credentials['is_blocked']  = 0;
         }
 
