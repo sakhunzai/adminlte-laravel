@@ -78,7 +78,7 @@ class AuthController extends Controller
 
         // multi part name
         $data = $this->normalizeName($data, $register);
-        $messages= !isset($register['validation_messages']) ? $register['validation_messages'] : [];
+        $messages= isset($register['validation_messages']) ? $register['validation_messages'] : [];
         return Validator::make($data, $validations,$messages);
     }
 
