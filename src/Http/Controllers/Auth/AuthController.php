@@ -194,6 +194,17 @@ class AuthController extends Controller
 
     protected function authenticated($request, $user)
     {
+        //check  user account is verified
+        $verified=$this->isVerified($user);
+
+        if($verified!==true) return $verified;
+
+        //check user is not blocked
+        $isNotBlocked=$this->isNotBlocked($user);
+
+        if($isNotBlocked!==true) return $isNotBlocked;
+
+
         $redirect = config('adminlte.auth.login.redirect', []);
 
         $redirectTo = '';
@@ -210,5 +221,43 @@ class AuthController extends Controller
 
         $redirectTo = $redirectTo == '' ? $this->redirectPath() : $redirectTo;
         return redirect()->intended($redirectTo);
+    }
+
+    protected function isVerified($user)
+    {
+        // user email not verified
+        if ($user->is_verified !== config('adminlte.auth.is_verified_equal') &&  $user->verification_code != '') {
+
+            return back()->withErrors(
+                [
+                    $this->loginUsername() => 'You need to verify your account. We have sent you an activation link, please check your email.'
+                ]
+            );
+            // user is not verified by admin
+        }else  if ($user->is_verified !== config('adminlte.auth.is_verified_equal')) {
+
+            return back()->withErrors(
+                [
+                    $this->loginUsername() => 'Your account is being verified, please check later.'
+                ]
+            );
+
+        }
+        // all verified
+        return true;
+    }
+
+    protected function isNotBlocked($user)
+    {
+        if ($user->is_blocked!=0) {
+
+            return back()->withErrors(
+                [
+                    $this->loginUsername() =>  'Your account is blocked, please contact administrator for further information.',
+                ]
+            );
+        }
+
+        return true;
     }
 }
