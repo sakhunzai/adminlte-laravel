@@ -197,14 +197,19 @@ class AuthController extends Controller
         //check  user account is verified
         $verified=$this->isVerified($user);
 
-        if($verified!==true) return $verified;
+        if($verified!==true) {
+            Auth::logout();
+            return $verified;
+        }
 
         //check user is not blocked
         $isNotBlocked=$this->isNotBlocked($user);
 
-        if($isNotBlocked!==true) return $isNotBlocked;
-
-
+        if($isNotBlocked!==true){
+            Auth::logout();
+            return $isNotBlocked;
+        }
+        
         $redirect = config('adminlte.auth.login.redirect', []);
 
         $redirectTo = '';
