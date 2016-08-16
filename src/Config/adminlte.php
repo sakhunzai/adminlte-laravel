@@ -43,6 +43,9 @@ return [
         'middleware' => ['web', 'auth'],
         'prefix' => '',
         'loginOnlyVerifiedUsers'=>true,
+        'admin_verify_error'=>'Your account is being verified, please check later.',
+        'email_verify_error'=>'You need to verify your account. We have sent you an activation link, please check your email.',
+        'user_blocked_error'=> 'Your account is blocked, please contact administrator for further information.',
         'is_verified_equal'=> 2,
         'resetLogin'=>false,
         'register'=>[

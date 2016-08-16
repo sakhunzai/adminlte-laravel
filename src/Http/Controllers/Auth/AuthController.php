@@ -209,7 +209,7 @@ class AuthController extends Controller
             Auth::logout();
             return $isNotBlocked;
         }
-        
+
         $redirect = config('adminlte.auth.login.redirect', []);
 
         $redirectTo = '';
@@ -231,19 +231,19 @@ class AuthController extends Controller
     protected function isVerified($user)
     {
         // user email not verified
-        if ($user->is_verified !== config('adminlte.auth.is_verified_equal') &&  $user->verification_code != '') {
+        if ($user->is_verified != config('adminlte.auth.is_verified_equal') &&  $user->verification_code != '') {
 
             return back()->withErrors(
                 [
-                    $this->loginUsername() => 'You need to verify your account. We have sent you an activation link, please check your email.'
+                    $this->loginUsername() => config('adminlte.auth.email_verify_error')
                 ]
             );
             // user is not verified by admin
-        }else  if ($user->is_verified !== config('adminlte.auth.is_verified_equal')) {
+        }else  if ($user->is_verified != config('adminlte.auth.is_verified_equal')) {
 
             return back()->withErrors(
                 [
-                    $this->loginUsername() => 'Your account is being verified, please check later.'
+                    $this->loginUsername() => config('adminlte.auth.admin_verify_error')
                 ]
             );
 
@@ -258,7 +258,7 @@ class AuthController extends Controller
 
             return back()->withErrors(
                 [
-                    $this->loginUsername() =>  'Your account is blocked, please contact administrator for further information.',
+                    $this->loginUsername() => config('adminlte.auth.user_blocked_error')
                 ]
             );
         }
